@@ -12,11 +12,13 @@
       background:#fff7ee;
       font-family:Arial, sans-serif; text-align:center;
     }
-    h1 { margin-bottom:1.2rem; }
-    #inputs { display:flex; gap:0.5rem; margin-bottom:1.6rem; }
+    h1 { font-size: 1rem; margin-bottom: 0.8rem; }
+    #inputs {
+      display:flex; gap:0.3rem; margin-bottom:1.4rem; justify-content:center;
+    }
     input {
-      width:3.2rem; height:3.2rem;
-      font-size:20px;
+      width:2.3rem; height:2.3rem;
+      font-size:16px;
       text-align:center; text-transform:uppercase;
       border:2px solid #ffc9a0; border-radius:6px;
     }
@@ -30,12 +32,11 @@
   <div id="inputs">
     <input maxlength="1"/><input maxlength="1"/><input maxlength="1"/>
     <input maxlength="1"/><input maxlength="1"/><input maxlength="1"/>
-    <input maxlength="1"/>
   </div>
   <div id="win">🎉 Congratulations, you win!!! 🎉</div>
   <div id="error">Wrong code, try again!</div>
 <script>
-const ANSWER = "WAYOWNC".toLowerCase();
+const ANSWER = "WAYOWN".toLowerCase();
 const DURATION = 5000;
 const boxes = document.querySelectorAll("#inputs input");
 const error = document.getElementById("error");
