@@ -1,3 +1,5 @@
+# Update HTML templates to require only 6 letters (not 7)
+team1_html_six = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,20 +14,15 @@
       background:#eef4ff;
       font-family:Arial, sans-serif; text-align:center;
     }
-    h1 { margin-bottom:1.2rem; }
-    #inputs { 
-      display:flex; 
-      gap:0.3rem; 
-      margin-bottom:1.6rem;
+    h1 { font-size: 1rem; margin-bottom: 0.8rem; }
+    #inputs {
+      display:flex; gap:0.3rem; margin-bottom:1.4rem; justify-content:center;
     }
     input {
-      width:2.3rem; 
-      height:2.3rem;
+      width:2.3rem; height:2.3rem;
       font-size:16px;
-      text-align:center; 
-      text-transform:uppercase;
-      border:2px solid #b0c4ff; 
-      border-radius:6px;
+      text-align:center; text-transform:uppercase;
+      border:2px solid #b0c4ff; border-radius:6px;
     }
     #win{display:none;font-size:1.8rem;color:#28a745;}
     #error{display:none;color:#d9534f;margin-top:1rem;font-weight:bold;}
@@ -37,12 +34,11 @@
   <div id="inputs">
     <input maxlength="1"/><input maxlength="1"/><input maxlength="1"/>
     <input maxlength="1"/><input maxlength="1"/><input maxlength="1"/>
-    <input maxlength="1"/>
   </div>
   <div id="win">🎉 Congratulations, you win!!! 🎉</div>
   <div id="error">Wrong code, try again!</div>
 <script>
-const ANSWER = "TBTIWNC".toLowerCase();
+const ANSWER = "TBTIWN".toLowerCase();  // 6-letter answer
 const DURATION = 5000;
 const boxes = document.querySelectorAll("#inputs input");
 const error = document.getElementById("error");
@@ -82,3 +78,20 @@ function celebrate(){
 </script>
 </body>
 </html>
+"""
+
+# Create Team 2 version by replacing relevant parts
+team2_html_six = team1_html_six.replace("Team 1", "Team 2") \
+    .replace("#eef4ff", "#fff7ee") \
+    .replace("#b0c4ff", "#ffc9a0") \
+    .replace("TBTIWN", "WAYOWN")
+
+# Save files
+path1 = "/mnt/data/team1_final_code_six.html"
+path2 = "/mnt/data/team2_final_code_six.html"
+with open(path1, "w") as f:
+    f.write(team1_html_six)
+with open(path2, "w") as f:
+    f.write(team2_html_six)
+
+path1, path2
