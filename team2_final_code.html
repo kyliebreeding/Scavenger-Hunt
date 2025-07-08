@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Team 2 – Final Code</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: #fff7ee;
+        margin: 0;
+      }
+      h1 {
+        margin-bottom: 1.5rem;
+      }
+      #inputs {
+        display: flex;
+        gap: 0.6rem;
+        margin-bottom: 2rem;
+      }
+      input {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.6rem;
+        text-align: center;
+        text-transform: uppercase;
+        border: 2px solid #ffc9a0;
+        border-radius: 6px;
+      }
+      #win {
+        display: none;
+        font-size: 1.8rem;
+        color: #d9534f;
+      }
+      #error {
+        display: none;
+        color: #c9302c;
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">Enter the Final Code</h1>
+    <div id="inputs">
+      <input maxlength="1" />
+      <input maxlength="1" />
+      <input maxlength="1" />
+      <input maxlength="1" />
+      <input maxlength="1" />
+      <input maxlength="1" />
+      <input maxlength="1" />
+    </div>
+    <div id="win">🎉 Congratulations, you win!!! 🎉</div>
+    <div id="error">Wrong code, try again!</div>
+
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    <script>
+      const ANSWER = "WAYOWNC".toLowerCase();
+      const boxes = document.querySelectorAll("#inputs input");
+      const errorMsg = document.getElementById("error");
+      const title = document.getElementById("title");
+      const winMsg = document.getElementById("win");
+
+      boxes.forEach((box, idx) => {
+        box.addEventListener("input", () => {
+          if (box.value && idx < boxes.length - 1) {
+            boxes[idx + 1].focus();
+          }
+          check();
+        });
+        box.addEventListener("keydown", e => {
+          if (e.key === "Backspace" && !box.value && idx > 0) {
+            boxes[idx - 1].focus();
+          }
+        });
+      });
+
+      function check() {
+        const attempt = Array.from(boxes)
+          .map(b => b.value.toLowerCase())
+          .join("");
+
+        if (attempt.length === ANSWER.length) {
+          if (attempt === ANSWER) {
+            document.getElementById("inputs").style.display = "none";
+            title.style.display = "none";
+            errorMsg.style.display = "none";
+            winMsg.style.display = "block";
+            confetti({
+              particleCount: 150,
+              spread: 70,
+              origin: { y: 0.6 }
+            });
+          } else {
+            errorMsg.style.display = "block";
+          }
+        } else {
+          errorMsg.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>
