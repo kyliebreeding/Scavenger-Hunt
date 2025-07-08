@@ -14,9 +14,7 @@
         background: #eef4ff;
         margin: 0;
       }
-      h1 {
-        margin-bottom: 1.5rem;
-      }
+      h1 { margin-bottom: 1.5rem; }
       #inputs {
         display: flex;
         gap: 0.6rem;
@@ -31,17 +29,14 @@
         border: 2px solid #b0c4ff;
         border-radius: 6px;
       }
-      #win {
-        display: none;
-        font-size: 1.5rem;
-        color: #28a745;
-      }
+      #win   { display: none; font-size: 1.8rem; color: #28a745; }
+      #error { display: none; color: #d9534f; margin-top: 1rem; font-weight: bold; }
     </style>
   </head>
   <body>
-    <h1>Enter the Final Code</h1>
+    <h1 id="title">Enter the Final Code</h1>
+
     <div id="inputs">
-      <!-- 7 single‑character inputs -->
       <input maxlength="1" />
       <input maxlength="1" />
       <input maxlength="1" />
@@ -50,33 +45,43 @@
       <input maxlength="1" />
       <input maxlength="1" />
     </div>
-    <div id="win">🎉 Congratulations, you win!!! 🎉</div>
 
+    <div id="win">🎉 Congratulations, you win!!! 🎉</div>
+    <div id="error">Wrong code, try again!</div>
+
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <script>
-      const ANSWER = "TBTIWNC".toLowerCase(); // expected 7‑letter answer for Team 1
-      const boxes = document.querySelectorAll("#inputs input");
+      const ANSWER = "TBTIWNC".toLowerCase();      // <- team-1 answer
+      const boxes  = document.querySelectorAll("#inputs input");
+      const error  = document.getElementById("error");
+      const title  = document.getElementById("title");
+      const winMsg = document.getElementById("win");
 
       boxes.forEach((box, idx) => {
         box.addEventListener("input", () => {
-          if (box.value && idx < boxes.length - 1) {
-            boxes[idx + 1].focus();
-          }
+          if (box.value && idx < boxes.length - 1) boxes[idx + 1].focus();
           check();
         });
         box.addEventListener("keydown", e => {
-          if (e.key === "Backspace" && !box.value && idx > 0) {
-            boxes[idx - 1].focus();
-          }
+          if (e.key === "Backspace" && !box.value && idx > 0) boxes[idx - 1].focus();
         });
       });
 
       function check() {
-        const attempt = Array.from(boxes)
-          .map(b => b.value.toLowerCase())
-          .join("");
-        if (attempt.length === ANSWER.length && attempt === ANSWER) {
-          document.getElementById("inputs").style.display = "none";
-          document.getElementById("win").style.display = "block";
+        const attempt = Array.from(boxes).map(b => b.value.toLowerCase()).join("");
+        if (attempt.length === ANSWER.length) {
+          if (attempt === ANSWER) {
+            document.getElementById("inputs").style.display = "none";
+            title.style.display = "none";
+            error.style.display = "none";
+            winMsg.style.display  = "block";
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+          } else {
+            error.style.display = "block";
+          }
+        } else {
+          error.style.display = "none";  // clear on partial edits
         }
       }
     </script>
