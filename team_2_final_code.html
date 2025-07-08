@@ -33,15 +33,20 @@
       }
       #win {
         display: none;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         color: #d9534f;
+      }
+      #error {
+        display: none;
+        color: #c9302c;
+        margin-top: 1rem;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
-    <h1>Enter the Final Code</h1>
+    <h1 id="title">Enter the Final Code</h1>
     <div id="inputs">
-      <!-- 7 single‑character inputs -->
       <input maxlength="1" />
       <input maxlength="1" />
       <input maxlength="1" />
@@ -51,10 +56,16 @@
       <input maxlength="1" />
     </div>
     <div id="win">🎉 Congratulations, you win!!! 🎉</div>
+    <div id="error">Wrong code, try again!</div>
 
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <script>
-      const ANSWER = "WAYOWNC".toLowerCase(); // expected 7‑letter answer for Team 2
+      const ANSWER = "WAYOWNC".toLowerCase();
       const boxes = document.querySelectorAll("#inputs input");
+      const errorMsg = document.getElementById("error");
+      const title = document.getElementById("title");
+      const winMsg = document.getElementById("win");
 
       boxes.forEach((box, idx) => {
         box.addEventListener("input", () => {
@@ -74,9 +85,23 @@
         const attempt = Array.from(boxes)
           .map(b => b.value.toLowerCase())
           .join("");
-        if (attempt.length === ANSWER.length && attempt === ANSWER) {
-          document.getElementById("inputs").style.display = "none";
-          document.getElementById("win").style.display = "block";
+
+        if (attempt.length === ANSWER.length) {
+          if (attempt === ANSWER) {
+            document.getElementById("inputs").style.display = "none";
+            title.style.display = "none";
+            errorMsg.style.display = "none";
+            winMsg.style.display = "block";
+            confetti({
+              particleCount: 150,
+              spread: 70,
+              origin: { y: 0.6 }
+            });
+          } else {
+            errorMsg.style.display = "block";
+          }
+        } else {
+          errorMsg.style.display = "none";
         }
       }
     </script>
