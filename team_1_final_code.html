@@ -67,7 +67,7 @@
   <script>
     /* ===== CONFIG ===== */
     const ANSWER = "WAYOWNC".toLowerCase(); // 
-    const CONFETTI_DURATION = 10 * 1000;     // 10-second burst
+    const CONFETTI_DURATION = 5 * 1000;     // 5-second burst
 
     /* ===== RUNTIME ===== */
     const boxes  = document.querySelectorAll("#inputs input");
@@ -89,7 +89,8 @@
     function check() {
       const attempt = Array.from(boxes).map(b => b.value.toLowerCase()).join("");
       if (attempt.length === ANSWER.length) {
-        if (attempt === ANSWER) celebrate();
+        if (attempt === ANSWER) 
+          celebrate();
         else error.style.display = "block";
       } else {
         error.style.display = "none";
