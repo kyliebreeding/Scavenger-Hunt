@@ -1,5 +1,3 @@
-# Update HTML templates to require only 6 letters (not 7)
-team1_html_six = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +36,7 @@ team1_html_six = """
   <div id="win">🎉 Congratulations, you win!!! 🎉</div>
   <div id="error">Wrong code, try again!</div>
 <script>
-const ANSWER = "TBTIWN".toLowerCase();  // 6-letter answer
+const ANSWER = "TBTIWN".toLowerCase();
 const DURATION = 5000;
 const boxes = document.querySelectorAll("#inputs input");
 const error = document.getElementById("error");
@@ -78,20 +76,3 @@ function celebrate(){
 </script>
 </body>
 </html>
-"""
-
-# Create Team 2 version by replacing relevant parts
-team2_html_six = team1_html_six.replace("Team 1", "Team 2") \
-    .replace("#eef4ff", "#fff7ee") \
-    .replace("#b0c4ff", "#ffc9a0") \
-    .replace("TBTIWN", "WAYOWN")
-
-# Save files
-path1 = "/mnt/data/team1_final_code_six.html"
-path2 = "/mnt/data/team2_final_code_six.html"
-with open(path1, "w") as f:
-    f.write(team1_html_six)
-with open(path2, "w") as f:
-    f.write(team2_html_six)
-
-path1, path2
